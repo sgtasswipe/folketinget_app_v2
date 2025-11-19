@@ -1,11 +1,9 @@
-// src/components/RenderVoteItem.js
-
 import { StyleSheet, View, Text, Pressable } from "react-native";
 import VoteDetailsScreen from "../screens/VoteDetailsScreen"
 
 // Receive both 'item' and 'navigation' as props
 const RenderVoteItem = ({ item, navigation }) => {
-    // Navigate to the 'VoteDetails' stack screen and pass the full 'item' data
+    //Whole cards are now pressable, will go to details screen
     const handlePress = () => {
         navigation.navigate("VoteDetails", { voteData: item }); 
     };

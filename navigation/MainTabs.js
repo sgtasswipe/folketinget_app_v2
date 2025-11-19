@@ -1,5 +1,3 @@
-// src/navigation/MainTabs.js
-
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/homeScreen';
 import LoginScreen from '../screens/loginScreen';

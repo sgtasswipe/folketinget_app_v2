@@ -1,17 +1,20 @@
 import { View, Text, Pressable, FlatList, StyleSheet, StatusBar } from 'react-native';
 import { useState, useEffect } from 'react';
 import RenderVoteItem from '../components/RenderVoteItem';
-export default function HomeScreen() {
+
+export default function HomeScreen({navigation}) {
 const [apiData, setApiData] = useState([])
 const [page, setPage] = useState(0)
 const pageSize = 20;
 const [searchQuery, setSearchQuery] = useState("")
 const [hasMoreData, SetHasMoreData] = useState(true)
+const [pressed, setPressed] = useState()
+
 const endThreshold = 0.5 //Used for flatlist to tell it when to fetch more data - halfway through the list.  
 
-const fetchApi = async () => {
+const getVoteDataFromApi = async () => {
     console.log("func called")
- const apiUrl = `https://oda.ft.dk/api/Afstemning?$inlinecount=allpages&$orderby=opdateringsdato desc&$skip=${
+    const apiUrl = `https://oda.ft.dk/api/Afstemning?$inlinecount=allpages&$orderby=opdateringsdato desc&$skip=${
         page * pageSize
       }&$top=${pageSize}&$expand=Sagstrin,Sagstrin/Sag &$filter=(typeid eq 1 or typeid eq 3)`
 
@@ -28,17 +31,18 @@ const fetchApi = async () => {
       console.log("RenderVoteItem:", RenderVoteItem);
 
     }
+
         useEffect(() => {
-    fetchApi(); 
+    getVoteDataFromApi(); 
   }, [page]); 
 
 //Use RenderVoteItem component
  const renderItem = ({ item }) => {
    return(
-    <RenderVoteItem item={item}/>
+    <RenderVoteItem item={item} navigation={navigation}/>
    )
  }
-
+ 
  const loadMoreData = () => {
     if (hasMoreData) {
       setPage((prevPage) => prevPage + 1);
@@ -47,15 +51,7 @@ const fetchApi = async () => {
  
   return (
     <View style={styles.container}>
-      <Text>Home Screen</Text>
-      <Pressable 
-                onPress={fetchApi}
-                style={{ backgroundColor: '#007AFF', padding: 10, borderRadius: 5 }}
-            >
-                <Text style={{ color: 'white', fontWeight: 'bold' }}>
-                    Load Votes (Page {page})
-                </Text> 
-            </Pressable>
+      <Text>Afstemninger</Text>
         <FlatList
         data={apiData}
         renderItem={renderItem}
@@ -63,8 +59,6 @@ const fetchApi = async () => {
         onEndReached={loadMoreData}
         onEndReachedThreshold={endThreshold}
         />
-
-        
     </View>
     
   );

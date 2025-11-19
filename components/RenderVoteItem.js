@@ -1,4 +1,5 @@
-import { StyleSheet, View, Text } from "react-native";
+import VoteDetailsScreen from "../screens/VoteDetailsScreen"
+import { StyleSheet, View, Text, Pressable } from "react-native";
 
 const PartyCircles = ({ parties }) => {
   if (!parties || parties.length === 0) return null;
@@ -21,11 +22,16 @@ const PartyCircles = ({ parties }) => {
   );
 };
 
-const RenderVoteItem = ({ item }) => {
+
+const RenderVoteItem = ({ item, navigation }) => {
+     //Whole cards are now pressable, will go to details screen
+    const handlePress = () => {
+        navigation.navigate("VoteDetails", { voteData: item }); 
+    };
         const title = item?.Sagstrin?.Sag?.titelkort || "No Title Available";
 
         return (
-            <View style={styles.itemContainer}>
+            <Pressable onPress={handlePress} style={styles.itemContainer}>
                 <Text style={styles.title}>{title}</Text>
                 <Text style={styles.date}>Dato: {item.Sagstrin.dato}</Text>
                 <Text style={[item.conclusion ? styles.resultTrue : styles.resultFalse]}>
@@ -38,8 +44,12 @@ const RenderVoteItem = ({ item }) => {
 
                 <Text>Imod: {item.against}</Text>
                 <PartyCircles parties={item.againstList}></PartyCircles>
-            </View>
+            </Pressable>
         );
+    };
+     //Whole cards are now pressable, will go to details screen
+    const handlePress = () => {
+        navigation.navigate("VoteDetails", { voteData: item }); 
     };
 
 // TODO: Create a table in the database with these attributes and the party colours along with the daily fetching of new votings
@@ -64,8 +74,7 @@ function getPartyLetterAndColour(party) {
 }
 
  export default RenderVoteItem;
-
-    const styles = StyleSheet.create({
+ const styles = StyleSheet.create({
     itemContainer: {
         padding: 15,
         borderBottomWidth: 1,

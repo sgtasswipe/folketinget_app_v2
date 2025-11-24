@@ -1,5 +1,4 @@
 import { StyleSheet, View, Text } from "react-native";
-import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native';
 import {generalStyles, partyColours} from '../styles/index'
 
@@ -24,13 +23,12 @@ const PartyCircles = ({ parties }) => {
   );
 };
 
-const RenderVoteItem = ({ item }) => {
-  const navigation = useNavigation();
+const RenderVoteItem = ({ item, navigation }) => {
 
   const title = item?.Sagstrin?.Sag?.titelkort || "No Title Available";
 
   const handlePress = () => {
-    navigation.navigate('VoteDetailsScreen', { voteItem: item });
+    navigation.navigate('VoteDetails', { voteItem: item });
   };
 
   return (

@@ -1,7 +1,8 @@
 import { View, Text, Pressable, FlatList, StyleSheet, StatusBar } from 'react-native';
 import { useState, useEffect } from 'react';
 import RenderVoteItem from '../components/RenderVoteItem';
-export default function HomeScreen() {
+
+export default function HomeScreen({navigation}) {
 const [apiData, setApiData] = useState([])
 const [page, setPage] = useState(0)
 const pageSize = 20;
@@ -50,7 +51,7 @@ const fetchApi = async () => {
 //Use RenderVoteItem component
  const renderItem = ({ item }) => {
    return(
-    <RenderVoteItem item={item}/>
+    <RenderVoteItem item={item} navigation={navigation}/>
    )
  }
 

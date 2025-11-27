@@ -21,15 +21,15 @@ const formatDate = (isoString) => {
 export default function VoteDetailsScreen({ route }) {
     const { voteData } = route.params;
 
-    const mainConclusionText = voteData.konklusion || voteData.Sagstrin.Sag.afstemningskonklusion || "Konklusion mangler";
+    const mainConclusionText = voteData.konklusion || "Konklusion mangler";
 
-    const title = voteData.Sagstrin.Sag.titel;
-    const titleshort = voteData.Sagstrin.Sag.titelkort;
-    const resume = voteData.Sagstrin.Sag.resume;
-    const createdDate = voteData.Sagstrin.dato; 
+    const title = voteData.titel
+    const titleshort = voteData.titelkort;
+    const resume = voteData.resume;
+    const createdDate = voteData.dato; 
     const updatedDate = voteData.opdateringsdato; 
     const comment = voteData.kommentar;
-    const typeTitel = voteData.Sagstrin.titel;
+    
     
 
     const isPassed = voteData.vedtaget;
@@ -71,7 +71,6 @@ export default function VoteDetailsScreen({ route }) {
            
             <View style={styles.section}>
                 <Text style={styles.sectionHeader}>ℹ️ Sagsdetaljer</Text>
-                <Text style={styles.metaText}><Text style={styles.metaLabel}>Sagsbehandlingstrin:</Text> {typeTitel}</Text>
                 <Text style={styles.metaText}><Text style={styles.metaLabel}>Afstemningsdato:</Text> {formatDate(createdDate)}</Text> 
                 <Text style={styles.metaText}><Text style={styles.metaLabel}>Opdateret:</Text> {formatDate(updatedDate)}</Text> 
             </View>

@@ -9,7 +9,7 @@ const HomeStack = createNativeStackNavigator();
 function HomeStackScreen (){
  return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name="VotesList" component={HomeScreen} options={{ headerShown: false }} /> 
+      <HomeStack.Screen name="VotesList" component={HomeScreen} options={{ headerShown: false }} />
       <HomeStack.Screen name="VoteDetails" component={VoteDetailsScreen} />
     </HomeStack.Navigator>
   );
@@ -20,6 +20,7 @@ export default function MainTabs() {
     <Tab.Navigator>
       <Tab.Screen name="Login" component={LoginScreen} />
       <Tab.Screen name="Home" component={HomeStackScreen} />
+      
     </Tab.Navigator>
   );
 }

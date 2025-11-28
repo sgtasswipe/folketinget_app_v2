@@ -1,8 +1,12 @@
 
 import { NavigationContainer } from '@react-navigation/native';
 import MainTabs from './MainTabs';
+import { AuthContext } from '../util/AuthContext';
+import { createContext, useContext } from 'react';
+
 
 export default function AppNavigator() {
+
   return (
     <NavigationContainer>
       <MainTabs />

@@ -1,10 +1,12 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/homeScreen';
 import LoginScreen from '../screens/loginScreen';
+import SignupScreen from '../screens/SignupScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import VoteDetailsScreen from '../screens/VoteDetailsScreen';
 const Tab = createBottomTabNavigator();
 const HomeStack = createNativeStackNavigator();
+
 
 function HomeStackScreen (){
  return (
@@ -18,9 +20,7 @@ function HomeStackScreen (){
 export default function MainTabs() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Login" component={LoginScreen} />
-      <Tab.Screen name="Home" component={HomeStackScreen} />
-      
+      <Tab.Screen name="Home" component={HomeStackScreen} />    
     </Tab.Navigator>
-  );
-}
+  ) }
+  

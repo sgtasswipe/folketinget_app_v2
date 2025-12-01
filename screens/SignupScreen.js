@@ -1,6 +1,5 @@
-
-import { useState, useContext, createContext } from "react";
-import { View, Text, TextInput, Button, Alert } from "react-native";
+import { useState, useContext } from "react";
+import { View, Text, TextInput, Pressable, Alert, StyleSheet } from "react-native";
 import { AuthContext } from "../util/AuthContext";
 
 export default function SignupScreen() {
@@ -22,40 +21,92 @@ export default function SignupScreen() {
 
       
       if (data?.access_token && data?.uid) {
-        Alert.alert(data.message)
+        Alert.alert("Success", data.message || "Account created and logged in!");
         login(data); // update global state via AuthContext
         
       } else if (data?.uid && !data?.access_token){
-        Alert.alert(data.message)
+        Alert.alert("Success", data.message || "Account created. Please login.");
       } else {
-        Alert.alert("Oprettelse fejlede", "Enten er denne mail allerede i brug, ellers opfylder dit kodeord ikke vores krav");
+        const detail = data?.detail || "Enten er denne mail allerede i brug, ellers opfylder dit kodeord ikke vores krav";
+        Alert.alert("Oprettelse fejlede", detail);
       }
 
     } catch (error) {
-      Alert.alert("Login error", error.message);
+      Alert.alert("Signup Error", "Could not connect to the server.");
     }
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", padding: 20 }}>
-      <Text>Signup</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Create Account</Text>
 
       <TextInput
         placeholder="Email"
+        placeholderTextColor="#CCCCCC"
         value={email}
         onChangeText={setEmail}
-        style={{ borderWidth: 1, marginVertical: 10 }}
+        keyboardType="email-address"
+        autoCapitalize="none"
+        style={styles.input}
       />
 
       <TextInput
         placeholder="Password"
+        placeholderTextColor="#CCCCCC"
         secureTextEntry
         value={password}
         onChangeText={setPassword}
-        style={{ borderWidth: 1, marginVertical: 10 }}
+        style={styles.input}
       />
 
-      <Button title="Signup" onPress={performSignup} />
+      <Pressable onPress={performSignup} style={styles.primaryButton}>
+        <Text style={styles.primaryButtonText}>Sign Up</Text>
+      </Pressable>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    padding: 30,
+    backgroundColor: '#FFFFFF',
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: "bold",
+    color: '#333333',
+    marginBottom: 30,
+    textAlign: 'center',
+  },
+  input: {
+    height: 50,
+    borderWidth: 1,
+    borderColor: '#CCCCCC',
+    borderRadius: 8,
+    paddingHorizontal: 15,
+    marginVertical: 10,
+    fontSize: 16,
+    backgroundColor: '#F9F9F9',
+    color: '#333333',
+  },
+  primaryButton: {
+    backgroundColor: '#007AFF',
+    paddingVertical: 15,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 20,
+    marginBottom: 10,
+    shadowColor: '#007AFF',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 8,
+  },
+  primaryButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+});

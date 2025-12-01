@@ -105,28 +105,50 @@ function normalizeCustomFormat(item) {
   };
 }
 
-export function extractVoteResults(text) {
-  const inFavorMatch = text.match(/For stemte (\d+) \(([^)]+(\)[^)]+)*?)\)/);
-  const againstMatch = text.match(/imod stemte (\d+) \(([^)]+(\)[^)]+)*?)\)/);
+function splitList(str) {
+  // More robust party extraction - handles names in parentheses too
+  const partyMatches = str.match(/\b[A-Z]{1,3}\b/g) || [];
+  return partyMatches;
+}
 
-  function splitList(str) {
-    return str
-      .split(/,\s*|\s+og\s+/)
-      .map(item => item.trim())
-      .filter(Boolean);
+/**
+ * Extract vote results from konklusion text with multiple fallback patterns
+ */
+export function extractVoteResults(text) {
+  if (!text) return { inFavor: 0, against: 0, inFavorList: [], againstList: [], conclusion: false };
+
+  let normalizedText = text.replace(/\s+/g, ' ').trim();
+
+  // Pattern 1: "For stemte X (parties)" 
+  let inFavorMatch = text.match(/For stemte (\d+) \(([^)]+)\)/);
+  let againstMatch = text.match(/imod stemte (\d+) \(([^)]+)\)/);
+
+  // Pattern 2: "X stemmer for forslaget (parties)"
+  if (!inFavorMatch) {
+    inFavorMatch = normalizedText.match(/(\d+)\s+stemmer?\s+for(?:\s+forslaget?)?\s*\(\s*([^)]+)\s*\)/i);
+  }
+  if (!againstMatch) {
+    againstMatch = normalizedText.match(/(\d+)\s+stemmer?\s+imod(?:\s+forslaget?)?\s*\(\s*([^)]+)\s*\)/i);
+  }
+
+  // Pattern 3: Any number followed by "stemmer" and "for/imod" with (parties)
+  if (!inFavorMatch) {
+    inFavorMatch = normalizedText.match(/(\d+)\s+stemmer?[^)]*for[^)]*\(\s*([^)]+)\s*\)/i);
+  }
+  if (!againstMatch) {
+    againstMatch = normalizedText.match(/(\d+)\s+stemmer?[^)]*imod[^)]*\(\s*([^)]+)\s*\)/i);
   }
 
   const inFavor = inFavorMatch ? parseInt(inFavorMatch[1], 10) : 0;
   const against = againstMatch ? parseInt(againstMatch[1], 10) : 0;
-
   const inFavorList = inFavorMatch ? splitList(inFavorMatch[2]) : [];
   const againstList = againstMatch ? splitList(againstMatch[2]) : [];
-
   const conclusion = inFavor > against;
 
   return {
     inFavor,
     against,
+    inFavorList,
     inFavorList,
     againstList,
     conclusion,

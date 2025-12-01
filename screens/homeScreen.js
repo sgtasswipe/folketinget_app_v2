@@ -59,7 +59,7 @@ export default function HomeScreen({navigation}) {
         match_threshold: matchThreshold,
       };
 
-      const response = await fetch('http://192.168.0.111:5001/search', {
+      const response = await fetch('http://192.168.50.2:5001/search', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

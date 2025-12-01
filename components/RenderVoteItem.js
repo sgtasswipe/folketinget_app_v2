@@ -33,18 +33,24 @@ const RenderVoteItem = ({ item, navigation }) => {
     <Pressable onPress={handlePress} style={styles.itemContainer}>
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.date}>Dato: {item.dato}</Text>
-      <Text style={[item.conclusion ? styles.resultTrue : styles.resultFalse]}>
-        {item.conclusion ? 'Vedtaget' : 'Ikke vedtaget'}
-      </Text>
-      <Text></Text>
-      <Text>For: {item.inFavor}</Text>
-      <PartyCircles parties={item.inFavorList} />
-      <Text></Text>
-      <Text>Imod: {item.against}</Text>
-      <PartyCircles parties={item.againstList} />
+      
+      {item.conclusion && (
+        <>
+          <Text style={[item.conclusion ? styles.resultTrue : styles.resultFalse]}>
+            {item.conclusion ? 'Vedtaget' : 'Ikke vedtaget'}
+          </Text>
+          <Text></Text>
+          <Text>For: {item.inFavor}</Text>
+          <PartyCircles parties={item.inFavorList} />
+          <Text></Text>
+          <Text>Imod: {item.against}</Text>
+          <PartyCircles parties={item.againstList} />
+        </>
+      )}
     </Pressable>
   );
 };
+
 
 const partyColours = {
   S: { letter: 'S', colour: '#e53838' },

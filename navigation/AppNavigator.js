@@ -1,11 +1,16 @@
 import { NavigationContainer } from '@react-navigation/native';
 import MainTabs from './MainTabs';
+import AuthTabs from './AuthTabs';
+import { AuthContext } from '../util/AuthContext';
+import {  useContext } from 'react';
+
 
 export default function AppNavigator() {
+const {isLoggedIn} = useContext(AuthContext)
+
   return (
     <NavigationContainer>
-      <MainTabs />
+      {isLoggedIn ? <MainTabs/> : <AuthTabs/>}
     </NavigationContainer>
   );
 }
-//Later this will have a conditional based on session from supbase to either show login screens or the maintabs if logged in. 

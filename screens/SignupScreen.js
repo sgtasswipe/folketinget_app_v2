@@ -1,18 +1,16 @@
-// LoginScreen.js
-import { useState, useContext } from "react";
-import { View, Text, TextInput, Button, Alert, Pressable } from "react-native";
+
+import { useState, useContext, createContext } from "react";
+import { View, Text, TextInput, Button, Alert } from "react-native";
 import { AuthContext } from "../util/AuthContext";
 
-export default function LoginScreen() {
-  const { login } = useContext(AuthContext);
-
+export default function SignupScreen() {
+  const {login} = useContext(AuthContext)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const performLogin = async () => {
+  const performSignup = async () => {
     try {
-      const apiUrl = "http://20.251.146.98:5001/auth/login/password";
-      console.log("login backend called")
+      const apiUrl = "http://20.251.146.98:5001/auth/signup/email";
 
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -24,19 +22,23 @@ export default function LoginScreen() {
 
       
       if (data?.access_token && data?.uid) {
+        Alert.alert(data.message)
         login(data); // update global state via AuthContext
+        
+      } else if (data?.uid && !data?.access_token){
+        Alert.alert(data.message)
       } else {
-        Alert.alert("Login failed", "Invalid credentials");
+        Alert.alert("Oprettelse fejlede", "Enten er denne mail allerede i brug, ellers opfylder dit kodeord ikke vores krav");
       }
 
-    } catch (err) {
-      Alert.alert("Login error", err.message);
+    } catch (error) {
+      Alert.alert("Login error", error.message);
     }
   };
 
   return (
     <View style={{ flex: 1, justifyContent: "center", padding: 20 }}>
-      <Text>Login</Text>
+      <Text>Signup</Text>
 
       <TextInput
         placeholder="Email"
@@ -53,12 +55,7 @@ export default function LoginScreen() {
         style={{ borderWidth: 1, marginVertical: 10 }}
       />
 
-    <Pressable onPress={performLogin} style={{margin: 5,marginTop: 20, borderRadius: 5, paddingLeft: 150,}}>
-      <Text>Login</Text>
-    </Pressable>
-    
-     {/* this should be removed later, just here temp to bypass loginscreen for dev*/}
-    <Pressable onpress={login()}></Pressable>
+      <Button title="Signup" onPress={performSignup} />
     </View>
-  ); 
+  );
 }

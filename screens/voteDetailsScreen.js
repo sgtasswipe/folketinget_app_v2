@@ -7,15 +7,15 @@ const VoteDetailsScreen = ({ route }) => {
 
   return (
     <ScrollView style={styles.detailsContainer}>
-      <Text style={styles.title}>{item?.Sagstrin?.Sag?.titelkort}</Text>
-      <Text style={generalStyles.date}>Dato: {item.Sagstrin.dato}</Text>
+      <Text style={styles.title}>{item?.titelkort}</Text>
+      <Text style={generalStyles.date}>Dato: {item?.dato}</Text>
       <Text></Text>
-      <Text style={[item.conclusion ? generalStyles.resultTrue : generalStyles.resultFalse]}>
-        {item.conclusion ? 'Vedtaget' : 'Ikke vedtaget'}
+      <Text style={[item.konklusion ? generalStyles.resultTrue : generalStyles.resultFalse]}>
+        {item.konklusion ? 'Vedtaget' : 'Ikke vedtaget'}
       </Text>
       <Text></Text>
       <Text style={styles.paragraph}>
-        {item?.Sagstrin?.Sag?.resume ? item?.Sagstrin?.Sag?.resume : item?.Sagstrin?.Sag?.titel}
+        {item?.resume ? item?.resume : item?.titel}
       </Text>      
       <Text></Text>
       <Text>Stemmer for: {item.inFavor}</Text>

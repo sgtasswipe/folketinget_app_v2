@@ -2,8 +2,10 @@ import { useState, useContext } from "react";
 import { View, Text, TextInput, Alert, Pressable, StyleSheet } from "react-native";
 import { AuthContext } from "../util/AuthContext";
 
-export default function LoginScreen() {
+
+export default function LoginScreen({navigation}) {
   const { login } = useContext(AuthContext);
+  const [passwordError, setPasswordError] = useState('');
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -51,19 +53,32 @@ export default function LoginScreen() {
         placeholderTextColor="#CCCCCC"
         secureTextEntry
         value={password}
-        onChangeText={setPassword}
-        style={styles.input}
+        onChangeText= {(text) => {
+          setPassword(text);
+          if (text.length < 6 && text.length > 0)
+            setPasswordError("Password skal være længere end 6 tegn.")
+          else 
+            setPasswordError("")
+        } }
+        style={[styles.input, passwordError && styles.inputError]} 
       />
+
+      {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
 
       <Pressable onPress={performLogin} style={styles.primaryButton}>
         <Text style={styles.primaryButtonText}>Login</Text>
       </Pressable>
-      
+       <Pressable onPress={() => navigation.navigate("Signup")} style={styles.primaryButton}>
+        <Text style={styles.primaryButtonText}>
+          Opret Bruger
+        </Text>
+      </Pressable>
       <Pressable onPress={() => login()} style={styles.guestButton}>
         <Text style={styles.guestButtonText}>
           Gæste login
         </Text>
       </Pressable>
+      
     </View>
   ); 
 }
@@ -120,5 +135,29 @@ const styles = StyleSheet.create({
     color: '#007AFF',
     fontSize: 14,
     textDecorationLine: 'underline',
-  }
+
+  },
+errorText: {
+    fontSize: 12,
+    color: '#FF3B30', 
+    marginTop: -8,  
+    marginBottom: 10,
+    paddingLeft: 5,
+},
+inputError: {
+    borderColor: '#FF3B30', 
+},
+requirementList: {
+    marginTop: 5,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+},
+passed: {
+    color: 'green',
+    fontSize: 14,
+},
+failed: {
+    color: '#888888',
+    fontSize: 14,
+}
 });

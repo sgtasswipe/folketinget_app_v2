@@ -24,7 +24,7 @@ const PartyCircles = ({ parties }) => {
 
 const RenderVoteItem = ({ item, navigation }) => {
   const handlePress = () => {
-    navigation.navigate("VoteDetails", { voteData: item });
+    navigation.navigate("VoteDetails", { voteItem: item });
   };
 
   const title = item?.titel || "No Title Available";
@@ -33,8 +33,8 @@ const RenderVoteItem = ({ item, navigation }) => {
     <Pressable onPress={handlePress} style={styles.itemContainer}>
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.date}>Dato: {item.dato}</Text>
-      <Text style={[item.conclusion ? styles.resultTrue : styles.resultFalse]}>
-        {item.conclusion ? 'Vedtaget' : 'Ikke vedtaget'}
+      <Text style={[item.konklusion ? styles.resultTrue : styles.resultFalse]}>
+        {item.konklusion ? 'Vedtaget' : 'Ikke vedtaget'}
       </Text>
       <Text></Text>
       <Text>For: {item.inFavor}</Text>

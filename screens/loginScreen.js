@@ -1,6 +1,6 @@
 // LoginScreen.js
 import { useState, useContext } from "react";
-import { View, Text, TextInput, Button, Alert } from "react-native";
+import { View, Text, TextInput, Button, Alert, Pressable } from "react-native";
 import { AuthContext } from "../util/AuthContext";
 
 export default function LoginScreen() {
@@ -12,6 +12,7 @@ export default function LoginScreen() {
   const performLogin = async () => {
     try {
       const apiUrl = "http://20.251.146.98:5001/auth/login/password";
+      console.log("login backend called")
 
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -22,7 +23,7 @@ export default function LoginScreen() {
       const data = await response.json();
 
       
-      if (data?.acces_token && data?.uid) {
+      if (data?.access_token && data?.uid) {
         login(data); // update global state via AuthContext
       } else {
         Alert.alert("Login failed", "Invalid credentials");
@@ -52,7 +53,12 @@ export default function LoginScreen() {
         style={{ borderWidth: 1, marginVertical: 10 }}
       />
 
-      <Button title="Login" onPress={performLogin} />
+    <Pressable onPress={performLogin} style={{margin: 5,marginTop: 20, borderRadius: 5, paddingLeft: 150,}}>
+      <Text>Login</Text>
+    </Pressable>
+    
+     {/* this should be removed later, just here temp to bypass loginscreen for dev*/}
+    <Pressable onpress={login()}></Pressable>
     </View>
-  );
+  ); 
 }

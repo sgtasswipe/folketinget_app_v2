@@ -1,7 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/homeScreen';
-import LoginScreen from '../screens/loginScreen';
-import SignupScreen from '../screens/SignupScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import VoteDetailsScreen from '../screens/VoteDetailsScreen';
 const Tab = createBottomTabNavigator();

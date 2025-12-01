@@ -4,7 +4,7 @@ import { AuthProvider } from "./util/AuthContext";
 export default function App() {
   return(
     <AuthProvider>
-    <AppNavigator/>;
+    <AppNavigator/>
     </AuthProvider>
   )
 }

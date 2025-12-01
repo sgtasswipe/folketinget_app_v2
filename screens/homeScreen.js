@@ -68,8 +68,9 @@ export default function HomeScreen({navigation}) {
       });
 
       const data = await response.json();
-      
+      console.log("performing search...")
       const augmentedItems = processVoteItems(data);
+      console.log("Proccessed Search items")
       setApiData(augmentedItems);
       setShowSearchOptions(false);
     } catch (error) {

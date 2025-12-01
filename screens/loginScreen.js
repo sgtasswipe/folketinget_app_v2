@@ -11,7 +11,7 @@ export default function LoginScreen() {
 
   const performLogin = async () => {
     try {
-      const apiUrl = "http://192.168.0.111:5001/auth/login/password";
+      const apiUrl = "http://20.251.146.98:5001/auth/login/password";
 
       const response = await fetch(apiUrl, {
         method: "POST",

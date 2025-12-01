@@ -68,47 +68,39 @@ function getPartyLetterAndColour(party) {
 
 export default RenderVoteItem;
 
-const styles = StyleSheet.create({
-  itemContainer: {
-    padding: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-    backgroundColor: 'white',
-    marginBottom: 5,
-    borderRadius: 8,
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginBottom: 5,
-  },
-  date: {
-    fontSize: 12,
-    color: '#666',
-  },
-  partyCircleContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginTop: 5,
-  },
-  partyCircle: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 6,
-    marginBottom: 6,
-  },
-  partyLetter: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 14,
-  },
-  resultTrue: {
-    color: 'green',
-  },
-  resultFalse: {
-    color: 'red',
-  },
+    const styles = StyleSheet.create({
+    itemContainer: {
+        padding: 15,
+        borderBottomWidth: 1,
+        borderBottomColor: '#eee',
+        backgroundColor: 'white',
+        marginBottom: 5,
+        borderRadius: 8,
+    },
+    title: {
+        fontSize: 16,
+        fontWeight: '600',
+        marginBottom: 5,
+    },
+    partyCircleContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        marginTop: 5,
+    },
+    partyCircle: {
+        width: 24,
+        height: 24,
+        borderRadius: 12,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 6,
+        marginBottom: 6,
+    },
+    partyLetter: {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 14,
+    }
 });
+
+export {PartyCircles, getPartyLetterAndColour}

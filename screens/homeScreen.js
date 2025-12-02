@@ -117,6 +117,10 @@ export default function HomeScreen({navigation}) {
           onChangeText={setSearchInputValue}
           editable={!isSearching}
         />
+         <Pressable style={styles.settingsButton} onPress={performSearch}>
+        <Text style={styles.searchButton}>{isSearching ? "Søger" : "Søg"}
+        </Text>
+      </Pressable>
         <Pressable 
           onPress={() => setShowSearchOptions(!showSearchOptions)}
           style={styles.settingsButton}
@@ -125,6 +129,7 @@ export default function HomeScreen({navigation}) {
           <Text style={styles.settingsButtonText}>⚙️</Text>
         </Pressable>
       </View>
+     
 
       {/* Search Options Modal */}
       <Modal

@@ -63,7 +63,7 @@ function normalizeParliamentFormat(item) {
     conclusion: false,
     
     // Original format reference
-    sourceFormat: 'parliament',
+    sourceFormat: 'Folketingets Åbne Data.',
     originalData: item,
   };
 }
@@ -100,7 +100,7 @@ function normalizeCustomFormat(item) {
     conclusion: item.vedtaget || false,
     
     // Original format reference
-    sourceFormat: 'custom',
+    sourceFormat: 'Hentet fra vores egen database',
     originalData: item,
   };
 }

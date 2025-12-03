@@ -24,7 +24,7 @@ const PartyCircles = ({ parties }) => {
 
 const RenderVoteItem = ({ item, navigation }) => {
   const handlePress = () => {
-    navigation.navigate("VoteDetails", { voteItem: item });
+    navigation.navigate("VoteDetails", { voteData: item });
   };
 
   const title = item?.titel || "No Title Available";

@@ -17,7 +17,7 @@ export default function SignupScreen() {
 
   const performSignup = async () => {
     try {
-      const apiUrl = "http://20.251.146.98:5001/auth/signup/email";
+      const apiUrl = "http://20.251.146.203:5001/auth/signup/email";
 
       const response = await fetch(apiUrl, {
         method: "POST",

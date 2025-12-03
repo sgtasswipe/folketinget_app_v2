@@ -12,7 +12,7 @@ export default function ProfileScreen({ navigation }) {
       <View style={styles.guestCard}>
         <Text style={styles.guestTitle}>Ingen profil fundet</Text>
         <Text style={styles.guestText}>
-          Du bruger appen som gæst. For at oprette en profil skal du logge ud af gæstebrukeren.
+          Du bruger appen som gæst. For at oprette en profil skal du logge ud.
         </Text>
 
         <Pressable style={styles.primaryButton} onPress={() => logout()}>

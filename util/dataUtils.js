@@ -1,5 +1,3 @@
-
-
 /**
  * Detect which format the data is in
  * Danish Parliament format has: Sagstrin.Sag structure
@@ -7,11 +5,11 @@
  */
 export function detectDataFormat(item) {
   if (item.Sagstrin && item.Sagstrin.Sag) {
-    return 'parliament';
+    return "parliament";
   } else if (item.sag_id !== undefined && item.afstemning_id !== undefined) {
-    return 'custom';
+    return "custom";
   }
-  return 'unknown';
+  return "unknown";
 }
 
 /**
@@ -19,13 +17,13 @@ export function detectDataFormat(item) {
  */
 export function normalizeVoteData(item) {
   const format = detectDataFormat(item);
-  
-  if (format === 'parliament') {
+
+  if (format === "parliament") {
     return normalizeParliamentFormat(item);
-  } else if (format === 'custom') {
+  } else if (format === "custom") {
     return normalizeCustomFormat(item);
   }
-  
+
   throw new Error(`Unknown data format for item: ${JSON.stringify(item)}`);
 }
 
@@ -34,41 +32,41 @@ export function normalizeVoteData(item) {
  */
 function normalizeParliamentFormat(item) {
   const sag = item.Sagstrin.Sag;
-  
+
   return {
     // Unified IDs
     id: item.id,
     sagId: sag.id,
     afstemningId: item.id,
-    
+
     // Text content
     titel: sag.titel,
     titelKort: sag.titelKort,
-    resume: sag.resume || '',
-    
+    resume: sag.resume || "",
+
     // Vote data
     konklusion: item.konklusion,
     vedtaget: item.vedtaget,
-    kommentar: item.kommentar || '',
-    
+    kommentar: item.kommentar || "",
+
     // Dates
     dato: item.Sagstrin.dato,
     opdateringsdato: item.opdateringsdato,
-    
+
     // Vote details (will be populated by extractVoteResults)
     inFavor: 0,
     against: 0,
     inFavorList: [],
     againstList: [],
     conclusion: false,
-    
+
     // Original format reference
-    sourceFormat: 'Folketingets Åbne Data.',
+    sourceFormat: "Folketingets Åbne Data.",
     originalData: item,
   };
 }
 
-/**
+/**v
  * Convert custom API format to normalized format
  */
 function normalizeCustomFormat(item) {
@@ -77,30 +75,31 @@ function normalizeCustomFormat(item) {
     id: item.afstemning_id,
     sagId: item.sag_id,
     afstemningId: item.afstemning_id,
-    
+    matchType: item.match_type || null,
+
     // Text content
     titel: item.titel,
     titelkort: item.titelKort,
-    resume: item.resume || '',
-    
+    resume: item.resume || "",
+
     // Vote data
     konklusion: item.konklusion,
     vedtaget: item.vedtaget,
-    kommentar: item.kommentar || '',
-    
+    kommentar: item.kommentar || "",
+
     // Dates
     dato: item.afstemning_dato,
     opdateringsdato: item.opdateringsdato,
-    
+
     // Vote details (will be populated by extractVoteResults)
     inFavor: 0,
     against: 0,
     inFavorList: [],
     againstList: [],
     conclusion: item.vedtaget || false,
-    
+
     // Original format reference
-    sourceFormat: 'Hentet fra vores egen database',
+    sourceFormat: "Hentet fra vores egen database",
     originalData: item,
   };
 }
@@ -112,7 +111,7 @@ export function extractVoteResults(text) {
   function splitList(str) {
     return str
       .split(/,\s*|\s+og\s+/)
-      .map(item => item.trim())
+      .map((item) => item.trim())
       .filter(Boolean);
   }
 
@@ -137,10 +136,10 @@ export function extractVoteResults(text) {
  * Process items from any format
  */
 export function processVoteItems(items) {
-  return items.map(item => {
+  return items.map((item) => {
     const normalized = normalizeVoteData(item);
     const voteResults = extractVoteResults(normalized.konklusion);
-    
+
     return {
       ...normalized,
       ...voteResults,

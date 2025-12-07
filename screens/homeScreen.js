@@ -2,22 +2,20 @@ import {
   View,
   Text,
   Pressable,
-  FlatList,
-  StyleSheet,
-  StatusBar,
+  SectionList,
   TextInput,
-  Modal,
   Alert,
 } from "react-native";
-import Slider from "@react-native-community/slider";
 import { useState, useEffect } from "react";
 import RenderVoteItem from "../components/RenderVoteItem";
 import SearchOptionsModal from "../components/SearchOptionsModal";
 import { processVoteItems } from "../util/dataUtils";
+import { categorizeByTerm } from "../util/CategorizeByTerm";
 import styles from "../styles/homeScreenStyles";
 
 export default function HomeScreen({ navigation }) {
   const [apiData, setApiData] = useState([]);
+  const [sectionedData, setSectionedData] = useState([]);
   const [page, setPage] = useState(0);
   const pageSize = 20;
   const [hasMoreData, SetHasMoreData] = useState(true);
@@ -43,14 +41,21 @@ export default function HomeScreen({ navigation }) {
       const response = await fetch(apiUrl);
       const data = await response.json();
 
-      // Process items from parliament API
       const augmentedItems = processVoteItems(data.value);
-
+      console.log("First 5 processed votes:", augmentedItems.slice(0, 5));
       const newData =
         page === 0 ? augmentedItems : [...apiData, ...augmentedItems];
+
       setApiData(newData);
-    } catch (error) {
-      console.error("Error fetching data:", error);
+
+      // Categorize in a separate try/catch
+      try {
+        setSectionedData(categorizeByTerm(newData));
+      } catch (catError) {
+        console.error("Error categorizing data:", catError);
+      }
+    } catch (fetchError) {
+      console.error("Error fetching data:", fetchError);
       Alert.alert("Error", "Failed to fetch data");
     }
   };
@@ -85,6 +90,7 @@ export default function HomeScreen({ navigation }) {
       const augmentedItems = processVoteItems(data);
       console.log("Proccessed Search items");
       setApiData(augmentedItems);
+      setSectionedData(categorizeByTerm(augmentedItems));
       setShowSearchOptions(false);
     } catch (error) {
       console.error("Error performing search:", error);
@@ -106,6 +112,14 @@ export default function HomeScreen({ navigation }) {
       getVoteDataFromApi();
     }
   }, [page]);
+
+  const renderSectionHeader = ({ section }) => {
+    return (
+      <View style={styles.sectionHeader}>
+        <Text style={styles.sectionHeaderText}>{section.title}</Text>
+      </View>
+    );
+  };
 
   const renderItem = ({ item }) => {
     return <RenderVoteItem item={item} navigation={navigation} />;
@@ -169,10 +183,11 @@ export default function HomeScreen({ navigation }) {
       )}
 
       {/* Results List */}
-      <FlatList
-        data={apiData}
-        renderItem={renderItem}
+      <SectionList
+        sections={sectionedData}
         keyExtractor={(item) => item.id.toString()}
+        renderItem={renderItem}
+        renderSectionHeader={renderSectionHeader}
         onEndReached={loadMoreData}
         onEndReachedThreshold={endThreshold}
         ListEmptyComponent={

@@ -158,4 +158,18 @@ export default StyleSheet.create({
     color: "#999",
     fontWeight: "500",
   },
+
+  sectionHeader: {
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    backgroundColor: "#f0f0f0",
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+  },
+
+  sectionHeaderText: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#333",
+  },
 });

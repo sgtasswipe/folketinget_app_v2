@@ -42,7 +42,6 @@ export default function HomeScreen({ navigation }) {
       const data = await response.json();
 
       const augmentedItems = processVoteItems(data.value);
-      console.log("First 5 processed votes:", augmentedItems.slice(0, 5));
       const newData =
         page === 0 ? augmentedItems : [...apiData, ...augmentedItems];
 

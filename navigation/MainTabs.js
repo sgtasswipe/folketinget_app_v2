@@ -13,7 +13,11 @@ const SavedStack = createNativeStackNavigator();
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name="VotesList" component={HomeScreen} options={{ headerShown: false }} />
+      <HomeStack.Screen
+        name="VotesList"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
       <HomeStack.Screen name="VoteDetails" component={VoteDetailsScreen} />
     </HomeStack.Navigator>
   );

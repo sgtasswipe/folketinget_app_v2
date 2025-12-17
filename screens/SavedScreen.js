@@ -5,7 +5,7 @@ import RenderVoteItem from "../components/RenderVoteItem";
 import { processVoteItems } from "../util/dataUtils";
 import { AuthContext } from "../util/AuthContext";
 
-const BACKEND_API_URL = 'http://192.168.50.2:5001/saved-votings';
+const BACKEND_API_URL = 'http://20.251.146.203/saved-votings';
 
 export default function SavedScreen({ navigation }) {
     const [savedData, setSavedData] = useState([]);

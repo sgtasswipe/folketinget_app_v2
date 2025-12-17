@@ -1,10 +1,14 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeScreen from "../screens/homeScreen";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import VoteDetailsScreen from "../screens/voteDetailsScreen";
-import ProfileScreen from "../screens/ProfileScreen";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+import HomeScreen from '../screens/homeScreen';
+import VoteDetailsScreen from '../screens/voteDetailsScreen';
+import ProfileScreen from '../screens/ProfileScreen';
+import SavedScreen from '../screens/SavedScreen';
+
 const Tab = createBottomTabNavigator();
 const HomeStack = createNativeStackNavigator();
+const SavedStack = createNativeStackNavigator();
 
 function HomeStackScreen() {
   return (
@@ -19,10 +23,20 @@ function HomeStackScreen() {
   );
 }
 
+function SavedStackScreen() {
+  return (
+    <SavedStack.Navigator>
+      <SavedStack.Screen name="SavedList" component={SavedScreen} options={{ headerShown: false }} />
+      <SavedStack.Screen name="VoteDetails" component={VoteDetailsScreen} />
+    </SavedStack.Navigator>
+  );
+}
+
 export default function MainTabs() {
   return (
     <Tab.Navigator>
       <Tab.Screen name="Home" component={HomeStackScreen} />
+      <Tab.Screen name="Saved" component={SavedStackScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );

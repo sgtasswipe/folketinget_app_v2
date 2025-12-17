@@ -1,4 +1,5 @@
 import { StyleSheet, View, Text, Pressable } from "react-native";
+import { formatDate } from "../screens/voteDetailsScreen";
 
 const PartyCircles = ({ parties }) => {
   if (!parties || parties.length === 0) return null;
@@ -43,7 +44,7 @@ const RenderVoteItem = ({ item, navigation }) => {
     <Pressable onPress={handlePress} style={styles.itemContainer}>
       <Text style={styles.title}>{item.matchType}</Text>
       <Text style={styles.title}>{title}</Text>
-      <Text style={styles.date}>Dato: {item.dato}</Text>
+      <Text style={styles.date}>Dato: {formatDate(item.dato)}</Text>
       <Text style={[item.konklusion ? styles.resultTrue : styles.resultFalse]}>
         {item.konklusion ? "Vedtaget" : "Ikke vedtaget"}
       </Text>

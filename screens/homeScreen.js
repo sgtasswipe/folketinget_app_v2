@@ -33,9 +33,8 @@ export default function HomeScreen({ navigation }) {
   const getVoteDataFromApi = async () => {
     console.log("Fetching parliament API data");
 
-    const apiUrl = `https://oda.ft.dk/api/Afstemning?$inlinecount=allpages&$orderby=opdateringsdato desc&$skip=${
-      page * pageSize
-    }&$top=${pageSize}&$expand=Sagstrin,Sagstrin/Sag &$filter=(typeid eq 1 or typeid eq 3)`;
+    const apiUrl = `https://oda.ft.dk/api/Afstemning?$inlinecount=allpages&$orderby=opdateringsdato desc&$skip=${page * pageSize
+      }&$top=${pageSize}&$expand=Sagstrin,Sagstrin/Sag &$filter=(typeid eq 1 or typeid eq 3)`;
 
     try {
       const response = await fetch(apiUrl);

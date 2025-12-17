@@ -21,7 +21,7 @@ export default function HomeScreen({ navigation }) {
   const [hasMoreData, SetHasMoreData] = useState(true);
 
   // Search parameters
-  const [matchCount, setMatchCount] = useState(10);
+  const [matchCount, setMatchCount] = useState();
   const [matchThreshold, setMatchThreshold] = useState(0.8);
   const [showSearchOptions, setShowSearchOptions] = useState(false);
   const [searchInputValue, setSearchInputValue] = useState("");

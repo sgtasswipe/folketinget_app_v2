@@ -32,7 +32,12 @@ const RenderVoteItem = ({ item, navigation }) => {
     navigation.navigate("VoteDetails", { voteData: item });
   };
 
-  const title = item?.titel || "No Title Available";
+  const title =
+    item?.typeId === 1
+      ? item?.titel
+      : item?.typeId === 3
+      ? item?.titelKort
+      : "No Title Available";
 
   return (
     <Pressable onPress={handlePress} style={styles.itemContainer}>

@@ -38,10 +38,11 @@ function normalizeParliamentFormat(item) {
     id: item.id,
     sagId: sag.id,
     afstemningId: item.id,
+    typeId: item.typeid,
 
     // Text content
     titel: sag.titel,
-    titelKort: sag.titelKort,
+    titelKort: sag.titelkort,
     resume: sag.resume || "",
 
     // Vote data
@@ -76,6 +77,7 @@ function normalizeCustomFormat(item) {
     sagId: item.sag_id,
     afstemningId: item.afstemning_id,
     matchType: item.match_type || null,
+    typeId: item.type_id || null,
 
     // Text content
     titel: item.titel,

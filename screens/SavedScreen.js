@@ -5,7 +5,7 @@ import RenderVoteItem from "../components/RenderVoteItem";
 import { processVoteItems } from "../util/dataUtils";
 import { AuthContext } from "../util/AuthContext";
 
-const BACKEND_API_URL = 'http://20.251.146.203/saved-votings';
+const BACKEND_API_URL = 'http://20.251.146.203:5001/saved-votings';
 
 export default function SavedScreen({ navigation }) {
     const [savedData, setSavedData] = useState([]);
@@ -69,7 +69,7 @@ export default function SavedScreen({ navigation }) {
                     contentContainerStyle={styles.listContent}
                     ListEmptyComponent={
                         <View style={styles.centered}>
-                            <Text style={styles.emptyText}>Ingen gemte afstemninger fundet.</Text>
+                            <Text style={styles.emptyText}>Du har ingen gemte afstemninger.</Text>
                         </View>
                     }
                 />

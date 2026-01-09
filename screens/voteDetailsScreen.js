@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { AuthContext } from "../util/AuthContext";
+import { BACKEND_URL } from "../util/dataUtils";
 
 // Date formatter helper
 export const formatDate = (isoString) => {
@@ -57,7 +58,9 @@ export default function VoteDetailsScreen({ route, navigation }) {
       }
 
       try {
-        const response = await fetch(`http://20.251.146.203:5001/saved-votings`, {
+        const API_URL = BACKEND_URL + "/vote/saved-votings";
+
+        const response = await fetch(API_URL, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${session.uid}`,
@@ -94,7 +97,9 @@ export default function VoteDetailsScreen({ route, navigation }) {
     const method = isSaved ? 'DELETE' : 'POST';
 
     try {
-      const response = await fetch(`http://20.251.146.203:5001${endpoint}`, {
+      let api_url = BACKEND_URL + `vote${endpoint}`
+
+      const response = await fetch(api_url, {
         method: method,
         headers: {
           'Content-Type': 'application/json',

@@ -2,10 +2,10 @@ import React, { useState, useCallback, useContext } from "react";
 import { View, Text, FlatList, StyleSheet, ActivityIndicator, Alert } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import RenderVoteItem from "../components/RenderVoteItem";
-import { processVoteItems } from "../util/dataUtils";
+import { BACKEND_URL, processVoteItems } from "../util/dataUtils";
 import { AuthContext } from "../util/AuthContext";
 
-const BACKEND_API_URL = 'http://20.251.146.203:5001/saved-votings';
+const BACKEND_API_URL = BACKEND_URL + "/vote/saved-votings"
 
 export default function SavedScreen({ navigation }) {
     const [savedData, setSavedData] = useState([]);

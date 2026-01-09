@@ -1,5 +1,5 @@
 import { StyleSheet, View, Text, Pressable } from "react-native";
-import { formatDate } from "../screens/voteDetailsScreen";
+import { formatDate } from "../util/dataUtils";
 
 const PartyCircles = ({ parties }) => {
   if (!parties || parties.length === 0) return null;
@@ -9,11 +9,9 @@ const PartyCircles = ({ parties }) => {
       {parties.map((party) => {
         const { letter, colour } = getPartyLetterAndColour(party);
         const fontSizeStyle =
-          letter.length === 1
-            ? { fontSize: 14 }
-            : letter.length === 2
-            ? { fontSize: 12 }
-            : { fontSize: 10 };
+          letter.length === 1 ? { fontSize: 14 } :
+            letter.length === 2 ? { fontSize: 12 } :
+              { fontSize: 10 };
 
         return (
           <View
@@ -45,8 +43,8 @@ const RenderVoteItem = ({ item, navigation }) => {
       <Text style={styles.title}>{item.matchType}</Text>
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.date}>Dato: {formatDate(item.dato)}</Text>
-      <Text style={[item.konklusion ? styles.resultTrue : styles.resultFalse]}>
-        {item.konklusion ? "Vedtaget" : "Ikke vedtaget"}
+      <Text style={[item.vedtaget ? styles.resultTrue : styles.resultFalse]}>
+        {item.vedtaget ? 'Vedtaget' : 'Ikke Vedtaget'}
       </Text>
       <Text></Text>
       <Text>For: {item.inFavor}</Text>
@@ -83,38 +81,44 @@ function getPartyLetterAndColour(party) {
 export default RenderVoteItem;
 
 const styles = StyleSheet.create({
+  resultTrue: {
+    color: 'green',
+  },
+  resultFalse: {
+    color: 'red'
+  },
   itemContainer: {
     padding: 15,
     borderBottomWidth: 1,
-    borderBottomColor: "#eee",
-    backgroundColor: "white",
+    borderBottomColor: '#eee',
+    backgroundColor: 'white',
     marginBottom: 5,
     borderRadius: 8,
   },
   title: {
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: '600',
     marginBottom: 5,
   },
   partyCircleContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     marginTop: 5,
   },
   partyCircle: {
     width: 24,
     height: 24,
     borderRadius: 12,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginRight: 6,
     marginBottom: 6,
   },
   partyLetter: {
-    color: "white",
-    fontWeight: "bold",
+    color: 'white',
+    fontWeight: 'bold',
     fontSize: 14,
-  },
+  }
 });
 
-export { PartyCircles, getPartyLetterAndColour };
+export { PartyCircles, getPartyLetterAndColour }

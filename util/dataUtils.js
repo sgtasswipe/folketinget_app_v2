@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+export const BACKEND_URL = "http://20.251.146.203:5001"
+
+=======
+>>>>>>> 86a8d614332ae5077e9682e1b9c5eaf377a866f4
 /**
  * Detect which format the data is in
  * Danish Parliament format has: Sagstrin.Sag structure
@@ -18,7 +23,7 @@ export function detectDataFormat(item) {
 export function normalizeVoteData(item) {
   const format = detectDataFormat(item);
 
-  if (format === "parliament") {
+  if (format === 'parliament') {
     return normalizeParliamentFormat(item);
   } else if (format === "custom") {
     return normalizeCustomFormat(item);
@@ -38,17 +43,16 @@ function normalizeParliamentFormat(item) {
     id: item.id,
     sagId: sag.id,
     afstemningId: item.id,
-    typeId: item.typeid,
 
     // Text content
     titel: sag.titel,
-    titelKort: sag.titelkort,
-    resume: sag.resume || "",
+    titelKort: sag.titelKort,
+    resume: sag.resume || '',
 
     // Vote data
     konklusion: item.konklusion,
     vedtaget: item.vedtaget,
-    kommentar: item.kommentar || "",
+    kommentar: item.kommentar || '',
 
     // Dates
     dato: item.Sagstrin.dato,
@@ -76,18 +80,16 @@ function normalizeCustomFormat(item) {
     id: item.afstemning_id,
     sagId: item.sag_id,
     afstemningId: item.afstemning_id,
-    matchType: item.match_type || null,
-    typeId: item.type_id || null,
 
     // Text content
     titel: item.titel,
     titelkort: item.titelKort,
-    resume: item.resume || "",
+    resume: item.resume || '',
 
     // Vote data
     konklusion: item.konklusion,
     vedtaget: item.vedtaget,
-    kommentar: item.kommentar || "",
+    kommentar: item.kommentar || '',
 
     // Dates
     dato: item.afstemning_dato,
@@ -148,3 +150,12 @@ export function processVoteItems(items) {
     };
   });
 }
+
+export function formatDate(dateString) {
+  if (!dateString) return "No Date";
+  const date = new Date(dateString);
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+  return `${day}/${month}-${year}`;
+};

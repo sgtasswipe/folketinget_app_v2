@@ -8,6 +8,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { AuthContext } from "../util/AuthContext";
+import { BACKEND_URL } from "../util/dataUtils";
 
 export default function SignupScreen() {
   const { login } = useContext(AuthContext);
@@ -17,9 +18,9 @@ export default function SignupScreen() {
 
   const performSignup = async () => {
     try {
-      const apiUrl = "http://20.251.146.203:5001/auth/signup/email";
+      const API_URL = BACKEND_URL + "auth/signup/email";
 
-      const response = await fetch(apiUrl, {
+      const response = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

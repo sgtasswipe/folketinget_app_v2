@@ -2,24 +2,25 @@ import React, { useState, useEffect } from "react";
 import { View, Text, Pressable, StyleSheet, Alert } from "react-native";
 import { useContext } from "react";
 import { AuthContext } from "../util/AuthContext";
+import { BACKEND_URL } from "../util/dataUtils";
 
 export default function ProfileScreen({ navigation }) {
   const { session, logout } = useContext(AuthContext);
 
   if (!session || !session.access_token) {
     return (
-    <View style={styles.container}>
-      <View style={styles.guestCard}>
-        <Text style={styles.guestTitle}>Ingen profil fundet</Text>
-        <Text style={styles.guestText}>
-          Du bruger appen som gæst. For at oprette en profil skal du logge ud.
-        </Text>
+      <View style={styles.container}>
+        <View style={styles.guestCard}>
+          <Text style={styles.guestTitle}>Ingen profil fundet</Text>
+          <Text style={styles.guestText}>
+            Du bruger appen som gæst. For at oprette en profil skal du logge ud.
+          </Text>
 
-        <Pressable style={styles.primaryButton} onPress={() => logout()}>
-          <Text style={styles.primaryButtonText}>Log ud for at oprette profil</Text>
-        </Pressable>
-      </View>
-    </View>)
+          <Pressable style={styles.primaryButton} onPress={() => logout()}>
+            <Text style={styles.primaryButtonText}>Log ud for at oprette profil</Text>
+          </Pressable>
+        </View>
+      </View>)
   }
 
   const access_token = session.access_token;
@@ -42,8 +43,9 @@ export default function ProfileScreen({ navigation }) {
     if (!confirmed) return;
 
     try {
+      const API_URL = BACKEND_URL + "/auth/delete_user"
       const response = await fetch(
-        "http://20.251.146.98:5001/auth/delete_user",
+        API_URL,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -58,7 +60,7 @@ export default function ProfileScreen({ navigation }) {
 
         //Call logout() to clear the session
         logout();
-        navigation.replace("Login");
+        //navigation.replace("Login");
       } else {
         Alert.alert("Fejl", data.detail || "Kunne ikke slette kontoen.");
       }
@@ -112,7 +114,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
   },
-   guestCard: {
+  guestCard: {
     backgroundColor: "white",
     padding: 25,
     borderRadius: 12,

@@ -19,13 +19,13 @@ export function detectDataFormat(item) {
  */
 export function normalizeVoteData(item) {
   const format = detectDataFormat(item);
-  
+
   if (format === 'parliament') {
     return normalizeParliamentFormat(item);
   } else if (format === 'custom') {
     return normalizeCustomFormat(item);
   }
-  
+
   throw new Error(`Unknown data format for item: ${JSON.stringify(item)}`);
 }
 
@@ -34,34 +34,34 @@ export function normalizeVoteData(item) {
  */
 function normalizeParliamentFormat(item) {
   const sag = item.Sagstrin.Sag;
-  
+
   return {
     // Unified IDs
     id: item.id,
     sagId: sag.id,
     afstemningId: item.id,
-    
+
     // Text content
     titel: sag.titel,
     titelKort: sag.titelKort,
     resume: sag.resume || '',
-    
+
     // Vote data
     konklusion: item.konklusion,
     vedtaget: item.vedtaget,
     kommentar: item.kommentar || '',
-    
+
     // Dates
     dato: item.Sagstrin.dato,
     opdateringsdato: item.opdateringsdato,
-    
+
     // Vote details (will be populated by extractVoteResults)
     inFavor: 0,
     against: 0,
     inFavorList: [],
     againstList: [],
     conclusion: false,
-    
+
     // Original format reference
     sourceFormat: 'Folketingets Åbne Data.',
     originalData: item,
@@ -77,28 +77,28 @@ function normalizeCustomFormat(item) {
     id: item.afstemning_id,
     sagId: item.sag_id,
     afstemningId: item.afstemning_id,
-    
+
     // Text content
     titel: item.titel,
     titelkort: item.titelKort,
     resume: item.resume || '',
-    
+
     // Vote data
     konklusion: item.konklusion,
     vedtaget: item.vedtaget,
     kommentar: item.kommentar || '',
-    
+
     // Dates
     dato: item.afstemning_dato,
     opdateringsdato: item.opdateringsdato,
-    
+
     // Vote details (will be populated by extractVoteResults)
     inFavor: 0,
     against: 0,
     inFavorList: [],
     againstList: [],
     conclusion: item.vedtaget || false,
-    
+
     // Original format reference
     sourceFormat: 'Hentet fra vores egen database',
     originalData: item,
@@ -140,10 +140,19 @@ export function processVoteItems(items) {
   return items.map(item => {
     const normalized = normalizeVoteData(item);
     const voteResults = extractVoteResults(normalized.konklusion);
-    
+
     return {
       ...normalized,
       ...voteResults,
     };
   });
 }
+
+export function formatDate(dateString) {
+  if (!dateString) return "No Date";
+  const date = new Date(dateString);
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+  return `${day}/${month}-${year}`;
+};

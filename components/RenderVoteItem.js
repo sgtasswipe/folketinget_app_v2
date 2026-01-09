@@ -1,4 +1,5 @@
 import { StyleSheet, View, Text, Pressable } from "react-native";
+import { formatDate } from "../util/dataUtils";
 
 const PartyCircles = ({ parties }) => {
   if (!parties || parties.length === 0) return null;
@@ -7,11 +8,11 @@ const PartyCircles = ({ parties }) => {
     <View style={styles.partyCircleContainer}>
       {parties.map(party => {
         const { letter, colour } = getPartyLetterAndColour(party);
-        const fontSizeStyle = 
+        const fontSizeStyle =
           letter.length === 1 ? { fontSize: 14 } :
-          letter.length === 2 ? { fontSize: 12 } :
-          { fontSize: 10 };
-        
+            letter.length === 2 ? { fontSize: 12 } :
+              { fontSize: 10 };
+
         return (
           <View key={party} style={[styles.partyCircle, { backgroundColor: colour }]}>
             <Text style={[styles.partyLetter, fontSizeStyle]}>{letter}</Text>
@@ -32,9 +33,9 @@ const RenderVoteItem = ({ item, navigation }) => {
   return (
     <Pressable onPress={handlePress} style={styles.itemContainer}>
       <Text style={styles.title}>{title}</Text>
-      <Text style={styles.date}>Dato: {item.dato}</Text>
-      <Text style={[item.konklusion ? styles.resultTrue : styles.resultFalse]}>
-        {item.konklusion ? 'Vedtaget' : 'Ikke vedtaget'}
+      <Text style={styles.date}>Dato: {formatDate(item.dato)}</Text>
+      <Text style={[item.vedtaget ? styles.resultTrue : styles.resultFalse]}>
+        {item.vedtaget ? 'Vedtaget' : 'Ikke Vedtaget'}
       </Text>
       <Text></Text>
       <Text>For: {item.inFavor}</Text>
@@ -68,39 +69,45 @@ function getPartyLetterAndColour(party) {
 
 export default RenderVoteItem;
 
-    const styles = StyleSheet.create({
-    itemContainer: {
-        padding: 15,
-        borderBottomWidth: 1,
-        borderBottomColor: '#eee',
-        backgroundColor: 'white',
-        marginBottom: 5,
-        borderRadius: 8,
-    },
-    title: {
-        fontSize: 16,
-        fontWeight: '600',
-        marginBottom: 5,
-    },
-    partyCircleContainer: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        marginTop: 5,
-    },
-    partyCircle: {
-        width: 24,
-        height: 24,
-        borderRadius: 12,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginRight: 6,
-        marginBottom: 6,
-    },
-    partyLetter: {
-        color: 'white',
-        fontWeight: 'bold',
-        fontSize: 14,
-    }
+const styles = StyleSheet.create({
+  resultTrue: {
+    color: 'green',
+  },
+  resultFalse: {
+    color: 'red'
+  },
+  itemContainer: {
+    padding: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+    backgroundColor: 'white',
+    marginBottom: 5,
+    borderRadius: 8,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 5,
+  },
+  partyCircleContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginTop: 5,
+  },
+  partyCircle: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 6,
+    marginBottom: 6,
+  },
+  partyLetter: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 14,
+  }
 });
 
-export {PartyCircles, getPartyLetterAndColour}
+export { PartyCircles, getPartyLetterAndColour }

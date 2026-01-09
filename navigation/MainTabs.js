@@ -1,3 +1,4 @@
+import React, { useContext } from 'react'; // 1. Import useContext
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -5,6 +6,7 @@ import HomeScreen from '../screens/homeScreen';
 import VoteDetailsScreen from '../screens/voteDetailsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import SavedScreen from '../screens/SavedScreen';
+import { AuthContext } from '../util/AuthContext'; // 2. Import your AuthContext
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createNativeStackNavigator();
@@ -29,10 +31,17 @@ function SavedStackScreen() {
 }
 
 export default function MainTabs() {
+  const { session } = useContext(AuthContext);
+
   return (
     <Tab.Navigator>
       <Tab.Screen name="Home" component={HomeStackScreen} />
-      <Tab.Screen name="Saved" component={SavedStackScreen} />
+
+      {/* 4. Conditionally render the Saved tab */}
+      {session && (
+        <Tab.Screen name="Saved" component={SavedStackScreen} />
+      )}
+
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );

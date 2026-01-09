@@ -8,18 +8,18 @@ export default function ProfileScreen({ navigation }) {
 
   if (!session || !session.access_token) {
     return (
-    <View style={styles.container}>
-      <View style={styles.guestCard}>
-        <Text style={styles.guestTitle}>Ingen profil fundet</Text>
-        <Text style={styles.guestText}>
-          Du bruger appen som gæst. For at oprette en profil skal du logge ud.
-        </Text>
+      <View style={styles.container}>
+        <View style={styles.guestCard}>
+          <Text style={styles.guestTitle}>Ingen profil fundet</Text>
+          <Text style={styles.guestText}>
+            Du bruger appen som gæst. For at oprette en profil skal du logge ud.
+          </Text>
 
-        <Pressable style={styles.primaryButton} onPress={() => logout()}>
-          <Text style={styles.primaryButtonText}>Log ud for at oprette profil</Text>
-        </Pressable>
-      </View>
-    </View>)
+          <Pressable style={styles.primaryButton} onPress={() => logout()}>
+            <Text style={styles.primaryButtonText}>Log ud for at oprette profil</Text>
+          </Pressable>
+        </View>
+      </View>)
   }
 
   const access_token = session.access_token;
@@ -43,7 +43,7 @@ export default function ProfileScreen({ navigation }) {
 
     try {
       const response = await fetch(
-        "http://20.251.146.98:5001/auth/delete_user",
+        "http://20.251.146.203:5001/auth/delete_user",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -58,7 +58,7 @@ export default function ProfileScreen({ navigation }) {
 
         //Call logout() to clear the session
         logout();
-        navigation.replace("Login");
+        //navigation.replace("Login");
       } else {
         Alert.alert("Fejl", data.detail || "Kunne ikke slette kontoen.");
       }
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
   },
-   guestCard: {
+  guestCard: {
     backgroundColor: "white",
     padding: 25,
     borderRadius: 12,

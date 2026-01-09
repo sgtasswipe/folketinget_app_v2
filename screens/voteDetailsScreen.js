@@ -57,7 +57,7 @@ export default function VoteDetailsScreen({ route, navigation }) {
       }
 
       try {
-        const response = await fetch(`http://20.251.146.203:5001/saved-votings`, {
+        const response = await fetch(`http://20.251.146.203:5001/vote/saved-votings`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${session.uid}`,
@@ -94,7 +94,7 @@ export default function VoteDetailsScreen({ route, navigation }) {
     const method = isSaved ? 'DELETE' : 'POST';
 
     try {
-      const response = await fetch(`http://20.251.146.203:5001${endpoint}`, {
+      const response = await fetch(`http://20.251.146.203:5001/vote${endpoint}`, {
         method: method,
         headers: {
           'Content-Type': 'application/json',

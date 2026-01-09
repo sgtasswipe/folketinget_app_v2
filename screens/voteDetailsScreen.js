@@ -12,7 +12,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { AuthContext } from "../util/AuthContext";
 
 // Date formatter helper
-const formatDate = (isoString) => {
+export const formatDate = (isoString) => {
   if (!isoString) return "Ikke tilgængelig";
   const date = new Date(isoString);
   const options = { year: "numeric", month: "long", day: "numeric" };

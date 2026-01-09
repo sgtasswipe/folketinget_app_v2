@@ -69,7 +69,7 @@ export default function SavedScreen({ navigation }) {
                     contentContainerStyle={styles.listContent}
                     ListEmptyComponent={
                         <View style={styles.centered}>
-                            <Text style={styles.emptyText}>Ingen gemte afstemninger fundet.</Text>
+                            <Text style={styles.emptyText}>Du har ingen gemte afstemninger.</Text>
                         </View>
                     }
                 />

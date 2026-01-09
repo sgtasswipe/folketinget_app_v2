@@ -1,5 +1,3 @@
-
-
 /**
  * Detect which format the data is in
  * Danish Parliament format has: Sagstrin.Sag structure
@@ -7,11 +5,11 @@
  */
 export function detectDataFormat(item) {
   if (item.Sagstrin && item.Sagstrin.Sag) {
-    return 'parliament';
+    return "parliament";
   } else if (item.sag_id !== undefined && item.afstemning_id !== undefined) {
-    return 'custom';
+    return "custom";
   }
-  return 'unknown';
+  return "unknown";
 }
 
 /**
@@ -22,7 +20,7 @@ export function normalizeVoteData(item) {
 
   if (format === 'parliament') {
     return normalizeParliamentFormat(item);
-  } else if (format === 'custom') {
+  } else if (format === "custom") {
     return normalizeCustomFormat(item);
   }
 
@@ -63,12 +61,12 @@ function normalizeParliamentFormat(item) {
     conclusion: false,
 
     // Original format reference
-    sourceFormat: 'Folketingets Åbne Data.',
+    sourceFormat: "Folketingets Åbne Data.",
     originalData: item,
   };
 }
 
-/**
+/**v
  * Convert custom API format to normalized format
  */
 function normalizeCustomFormat(item) {
@@ -100,7 +98,7 @@ function normalizeCustomFormat(item) {
     conclusion: item.vedtaget || false,
 
     // Original format reference
-    sourceFormat: 'Hentet fra vores egen database',
+    sourceFormat: "Hentet fra vores egen database",
     originalData: item,
   };
 }
@@ -112,7 +110,7 @@ export function extractVoteResults(text) {
   function splitList(str) {
     return str
       .split(/,\s*|\s+og\s+/)
-      .map(item => item.trim())
+      .map((item) => item.trim())
       .filter(Boolean);
   }
 
@@ -137,7 +135,7 @@ export function extractVoteResults(text) {
  * Process items from any format
  */
 export function processVoteItems(items) {
-  return items.map(item => {
+  return items.map((item) => {
     const normalized = normalizeVoteData(item);
     const voteResults = extractVoteResults(normalized.konklusion);
 

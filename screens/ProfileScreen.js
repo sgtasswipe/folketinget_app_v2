@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, Pressable, StyleSheet, Alert } from "react-native";
 import { useContext } from "react";
 import { AuthContext } from "../util/AuthContext";
+import { BACKEND_URL } from "../util/dataUtils";
 
 export default function ProfileScreen({ navigation }) {
   const { session, logout } = useContext(AuthContext);
@@ -42,8 +43,9 @@ export default function ProfileScreen({ navigation }) {
     if (!confirmed) return;
 
     try {
+      const API_URL = BACKEND_URL + "/auth/delete_user"
       const response = await fetch(
-        "http://20.251.146.203:5001/auth/delete_user",
+        API_URL,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

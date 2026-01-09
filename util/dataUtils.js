@@ -1,4 +1,4 @@
-
+export const BACKEND_URL = "http://20.251.146.203:5001"
 
 /**
  * Detect which format the data is in

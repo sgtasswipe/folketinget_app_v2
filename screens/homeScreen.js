@@ -12,7 +12,7 @@ import {
 import Slider from "@react-native-community/slider";
 import { useState, useEffect } from "react";
 import RenderVoteItem from "../components/RenderVoteItem";
-import { processVoteItems } from "../util/dataUtils";
+import { BACKEND_URL, processVoteItems } from "../util/dataUtils";
 
 export default function HomeScreen({ navigation }) {
   const [apiData, setApiData] = useState([]);
@@ -69,7 +69,9 @@ export default function HomeScreen({ navigation }) {
         match_threshold: matchThreshold,
       };
 
-      const response = await fetch("http://20.251.146.203:5001/search", {
+      const API_URL = BACKEND_URL + "/search"
+
+      const response = await fetch(API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

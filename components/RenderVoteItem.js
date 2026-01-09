@@ -6,7 +6,7 @@ const PartyCircles = ({ parties }) => {
 
   return (
     <View style={styles.partyCircleContainer}>
-      {parties.map(party => {
+      {parties.map((party) => {
         const { letter, colour } = getPartyLetterAndColour(party);
         const fontSizeStyle =
           letter.length === 1 ? { fontSize: 14 } :
@@ -14,7 +14,10 @@ const PartyCircles = ({ parties }) => {
               { fontSize: 10 };
 
         return (
-          <View key={party} style={[styles.partyCircle, { backgroundColor: colour }]}>
+          <View
+            key={party}
+            style={[styles.partyCircle, { backgroundColor: colour }]}
+          >
             <Text style={[styles.partyLetter, fontSizeStyle]}>{letter}</Text>
           </View>
         );
@@ -28,10 +31,16 @@ const RenderVoteItem = ({ item, navigation }) => {
     navigation.navigate("VoteDetails", { voteData: item });
   };
 
-  const title = item?.titel || "No Title Available";
+  const title =
+    item?.typeId === 1
+      ? item?.titel
+      : item?.typeId === 3
+      ? item?.titelKort
+      : "No Title Available";
 
   return (
     <Pressable onPress={handlePress} style={styles.itemContainer}>
+      <Text style={styles.title}>{item.matchType}</Text>
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.date}>Dato: {formatDate(item.dato)}</Text>
       <Text style={[item.vedtaget ? styles.resultTrue : styles.resultFalse]}>
@@ -48,23 +57,25 @@ const RenderVoteItem = ({ item, navigation }) => {
 };
 
 const partyColours = {
-  S: { letter: 'S', colour: '#e53838' },
-  V: { letter: 'V', colour: '#205da5' },
-  M: { letter: 'M', colour: '#b48cd2' },
-  DD: { letter: 'DD', colour: '#78a0e1' },
-  SF: { letter: 'SF', colour: '#ef75ca' },
-  LA: { letter: 'LA', colour: '#1db9ce' },
-  KF: { letter: 'KF', colour: '#8b8474' },
-  EL: { letter: 'EL', colour: '#eb7341' },
-  DF: { letter: 'DF', colour: '#f9c153' },
-  RV: { letter: 'RV', colour: '#78378c' },
-  ALT: { letter: 'ALT', colour: '#32913c' },
-  NB: { letter: 'NB', colour: '#127b7f' },
-  UFG: { letter: 'UFG', colour: '#8d95a5' }
+  S: { letter: "S", colour: "#e53838" },
+  V: { letter: "V", colour: "#205da5" },
+  M: { letter: "M", colour: "#b48cd2" },
+  DD: { letter: "DD", colour: "#78a0e1" },
+  SF: { letter: "SF", colour: "#ef75ca" },
+  LA: { letter: "LA", colour: "#1db9ce" },
+  KF: { letter: "KF", colour: "#8b8474" },
+  EL: { letter: "EL", colour: "#eb7341" },
+  DF: { letter: "DF", colour: "#f9c153" },
+  RV: { letter: "RV", colour: "#78378c" },
+  ALT: { letter: "ALT", colour: "#32913c" },
+  NB: { letter: "NB", colour: "#127b7f" },
+  UFG: { letter: "UFG", colour: "#8d95a5" },
 };
 
 function getPartyLetterAndColour(party) {
-  return partyColours[party] ? partyColours[party] : { letter: '?', colour: '#a8a8a8ff' };
+  return partyColours[party]
+    ? partyColours[party]
+    : { letter: "?", colour: "#a8a8a8ff" };
 }
 
 export default RenderVoteItem;
